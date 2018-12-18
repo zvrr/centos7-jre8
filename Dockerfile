@@ -1,18 +1,11 @@
 FROM centos:7
-MAINTAINER QAware OSS <qaware-oss@qaware.de>
+MAINTAINER Shuwei zelus <www.szshuwei.com>
 
-ENV JAVA_VERSION 8u77
-ENV BUILD_VERSION b03
+ENV JAVA_VERSION 8u191
+ENV BUILD_VERSION b12  
 
 WORKDIR /tmp
+ADD jdk1.8.0_191.tgz /usr/local 
 
-RUN yum -y install wget; wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/$JAVA_VERSION-$BUILD_VERSION/server-jre-$JAVA_VERSION-linux-x64.tar.gz" -O server-jre-8-linux-x64.tar.gz
-RUN tar xzf server-jre-8-linux-x64.tar.gz; mkdir -p /usr/java; mv jdk1.8.0_77 /usr/java; ln -s /usr/java/jdk1.8.0_77 /usr/java/latest; ln -s /usr/java/latest /usr/java/default
-
-RUN alternatives --install /usr/bin/java java /usr/java/latest/bin/java 1
-RUN alternatives --install /usr/bin/javac javac /usr/java/latest/bin/javac 1
-
-ENV JAVA_HOME /usr/java/latest
-
-RUN rm -f server-jre-8-linux-x64.tar.gz; yum -y remove wget; yum -y clean all
-WORKDIR /
+ENV JAVA_HOME /usr/local/jdk1.8.0_191
+ENV PATH ${PATH}:${JAVA_HOME}/bi
